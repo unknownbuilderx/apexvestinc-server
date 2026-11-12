@@ -37,9 +37,7 @@ const corsOptions = {
     if (!origin) return cb(null, true); // curl / Postman / server-to-server
     const ok =
       allowedOrigins.includes(origin) ||
-      /^https:\/\/(www\.)?(apexvestinc|grow-vest).*\.(vercel\.app|com)$/.test(
-        origin,
-      );
+      /^https:\/\/(apexvestinc|grow-vest).*\.vercel\.app$/.test(origin);
     if (ok) return cb(null, true);
     cb(new Error(`CORS: origin ${origin} not allowed`));
   },
