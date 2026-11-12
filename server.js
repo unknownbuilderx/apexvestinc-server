@@ -22,6 +22,8 @@ const app = express();
 
 // ─── Allowed CORS origins ─────────────────────────────────────────────────────
 const allowedOrigins = [
+  "https://apexvestinc.com", // Production custom domain (apex)
+  "https://www.apexvestinc.com", // Production custom domain (www)
   "https://apexvestinc.vercel.app", // Vercel frontend (rebranded)
   "https://grow-vest-lemon.vercel.app", // Legacy Vercel frontend (kept live during migration)
   "https://apexvestinc.web.app", // Firebase frontend
@@ -35,7 +37,9 @@ const corsOptions = {
     if (!origin) return cb(null, true); // curl / Postman / server-to-server
     const ok =
       allowedOrigins.includes(origin) ||
-      /^https:\/\/(apexvestinc|grow-vest).*\.vercel\.app$/.test(origin);
+      /^https:\/\/(www\.)?(apexvestinc|grow-vest).*\.(vercel\.app|com)$/.test(
+        origin,
+      );
     if (ok) return cb(null, true);
     cb(new Error(`CORS: origin ${origin} not allowed`));
   },
